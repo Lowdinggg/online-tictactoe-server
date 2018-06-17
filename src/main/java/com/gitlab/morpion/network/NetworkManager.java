@@ -16,9 +16,6 @@ public class NetworkManager {
         this.port = port;
     }
 
-    public void start() {
-        // TODO: Create server on port #port
-    }
 
     public void run() {
         final EventLoopGroup baseGroup = new NioEventLoopGroup();
@@ -29,6 +26,8 @@ public class NetworkManager {
              .group(baseGroup, workerGroup)
              .channel(NioServerSocketChannel.class)
              .childHandler(new ServerChannelInitialzer());
+
+            System.out.println("Started server on port: "+ port);
 
             serverBootstrap.bind(port).sync().channel().closeFuture().sync();
         } catch (InterruptedException e) {

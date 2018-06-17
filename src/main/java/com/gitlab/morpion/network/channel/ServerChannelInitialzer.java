@@ -19,5 +19,7 @@ public class ServerChannelInitialzer extends ChannelInitializer<SocketChannel> {
         pipe.addLast("decoder", new StringDecoder());
 
         pipe.addLast("handler", new ServerChannelHandler());
+
+        System.out.println("Initialized main channel");
     }
 }

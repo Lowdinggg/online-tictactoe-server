@@ -1,7 +1,6 @@
 package com.gitlab.morpion;
 
 import com.gitlab.morpion.network.NetworkManager;
-import com.sun.javaws.exceptions.InvalidArgumentException;
 
 public class Main {
 
@@ -13,7 +12,7 @@ public class Main {
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
-        networkManager.start();
+        networkManager.run();
     }
 
 }
