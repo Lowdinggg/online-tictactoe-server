@@ -11,7 +11,7 @@ public class NetworkManager {
     private int port;
 
     public NetworkManager(int port) throws IllegalArgumentException {
-        if (port > 65535)
+        if (port < 0 || port > 65535)
             throw new IllegalArgumentException("Port must be in range 0-65535");
         this.port = port;
     }
