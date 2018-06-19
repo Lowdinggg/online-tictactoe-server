@@ -1,22 +1,22 @@
 package com.gitlab.morpion.network.channel;
 
+import com.gitlab.morpion.network.packet.Packet;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.Delimiters;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
+import io.netty.handler.codec.serialization.ClassResolvers;
+import io.netty.handler.codec.serialization.ObjectDecoder;
+import io.netty.handler.codec.serialization.ObjectEncoder;
 
 
 public class ServerChannelInitialzer extends ChannelInitializer<SocketChannel> {
 
     protected void initChannel(SocketChannel socketChannel) throws Exception {
+
         ChannelPipeline pipe = socketChannel.pipeline();
 
-        pipe.addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
-        pipe.addLast("encoder", new StringEncoder());
-        pipe.addLast("decoder", new StringDecoder());
+        pipe.addLast("encoder", new ObjectEncoder());
+        pipe.addLast("decoder", new ObjectDecoder(ClassResolvers.weakCachingResolver(Packet.class.getClassLoader())));
 
         pipe.addLast("handler", new ServerChannelHandler());
 
